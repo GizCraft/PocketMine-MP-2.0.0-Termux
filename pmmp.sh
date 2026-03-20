@@ -35,16 +35,16 @@ run_server() {
   CORE=$(find_core)
 
   if [ -z "$CORE" ]; then
-    echo -e "${R}✘ Core tidak ditemukan${W}"
+    echo -e "${R}✘ Core not found!${W}"
     exit 1
   fi
 
   if tmux has-session -t $SESSION 2>/dev/null; then
-    echo -e "${Y}Server sudah berjalan${W}"
+    echo -e "${Y}The server is running${W}"
     exit 0
   fi
 
-  echo -e "${C}Menjalankan server...${W}"
+  echo -e "${C}Running Server...${W}"
 
   if [[ "$CORE" == *.phar ]]; then
     CMD="$PHP $CORE --enable-ansi --no-wizard"
@@ -54,7 +54,7 @@ run_server() {
 
   tmux new-session -d -s $SESSION "$CMD"
 
-  echo -e "${G}✔ Server dijalankan (session: $SESSION)${W}"
+  echo -e "${G}✔ Server is running (session: $SESSION)${W}"
 }
 
 status_server() {
@@ -70,9 +70,9 @@ stop_server() {
     tmux send-keys -t $SESSION "stop" C-m
     sleep 2
     tmux kill-session -t $SESSION 2>/dev/null
-    echo -e "${G}✔ Server dihentikan${W}"
+    echo -e "${G}✔ Server stoped${W}"
   else
-    echo -e "${R}Server tidak berjalan${W}"
+    echo -e "${R}Server is not running${W}"
   fi
 }
 
@@ -80,7 +80,7 @@ console_server() {
   if tmux has-session -t $SESSION 2>/dev/null; then
     tmux attach -t $SESSION
   else
-    echo -e "${R}Server tidak berjalan${W}"
+    echo -e "${R}Server is not running${W}"
   fi
 }
 
@@ -94,17 +94,17 @@ help_menu() {
   line
   echo -e "${G}PMMP COMMAND${W}"
   line
-  echo -e "${C}pmmp${W}              : Jalankan server"
-  echo -e "${C}pmmp start${W}        : Jalankan server"
-  echo -e "${C}pmmp stop${W}         : Hentikan server"
+  echo -e "${C}pmmp${W}              : Run Seveer"
+  echo -e "${C}pmmp start${W}        : Run Server"
+  echo -e "${C}pmmp stop${W}         : Stop Server"
   echo -e "${C}pmmp restart${W}      : Restart server"
   echo -e "${C}pmmp status${W}       : Status server"
-  echo -e "${C}pmmp console${W}      : Masuk console"
-  echo -e "${C}pmmp kill${W}         : Paksa matikan server"
-  echo -e "${C}pmmp logs${W}         : Lihat log (tmux attach)"
-  echo -e "${C}pmmp help${W}         : Bantuan"
+  echo -e "${C}pmmp console${W}      : Enter console"
+  echo -e "${C}pmmp kill${W}         : Force stop"
+  echo -e "${C}pmmp logs${W}         : View log (tmux attach)"
+  echo -e "${C}pmmp help${W}         : Help"
   line
-  echo -e "${Y}Contoh:${W}"
+  echo -e "${Y}Example:${W}"
   echo -e "  pmmp start"
   echo -e "  pmmp stop"
   echo -e "  pmmp console"
@@ -114,9 +114,9 @@ help_menu() {
 kill_server() {
   if tmux has-session -t $SESSION 2>/dev/null; then
     tmux kill-session -t $SESSION
-    echo -e "${G}✔ Server dimatikan paksa${W}"
+    echo -e "${G}✔ Server forcibly shut down${W}"
   else
-    echo -e "${R}Server tidak berjalan${W}"
+    echo -e "${R}Server is not running${W}"
   fi
 }
 
@@ -147,7 +147,7 @@ case "$1" in
     help_menu
   ;;
   *)
-    echo -e "${R}Command tidak dikenal${W}"
+    echo -e "${R}Unknown Command${W}"
     help_menu
   ;;
 esac
