@@ -7,7 +7,7 @@ Simple, flexible launcher script for running PocketMine-MP on Termux without wor
 ## 🚀 How To Use
 
 ```bash
-curl -O https://raw.githubusercontent.com/GizCraft/PocketMine-MP-2.0.0-Termux/main/pmmp.sh
+curl -O https://raw.githubusercontent.com/GizCraft/PocketMine-MP-2.0.0-Termux/refs/heads/main/install.sh
 chmod +x install.sh
 ./install.sh
 ```
